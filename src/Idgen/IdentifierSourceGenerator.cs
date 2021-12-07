@@ -40,7 +40,7 @@ namespace {fullNamespace}
     public readonly partial struct {typeName} : IEquatable<{typeName}>, IComparable<{typeName}>
     {{
         private readonly long _value;
-        public {typeName}(long value) => _value = value;
+        private {typeName}(long value) => _value = value;
         public int CompareTo({typeName} other) => _value.CompareTo(other._value);
         public bool Equals({typeName} other) => _value == other._value;
         public override bool Equals(object? obj) => obj is {typeName} id && Equals(id);
@@ -55,6 +55,7 @@ namespace {fullNamespace}
         public static bool operator <=({typeName} left, {typeName} right) => left._value <= right._value;
         public static bool operator >=({typeName} left, {typeName} right) => left._value >= right._value;
         public static {typeName} Empty => default;
+        public static {typeName} With(long value) => new(value);
     }}
 }}";
                 context.AddSource($"{typeName}.g", sourceText);
