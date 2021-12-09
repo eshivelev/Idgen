@@ -26,8 +26,8 @@ namespace Idgen
                     continue;
                 if (!IsStronglyTypedId(type))
                     continue;
-                string fullNamespace = type.ContainingNamespace.ToDisplayString();
-                string typeName = type.Name;
+                var fullNamespace = type.ContainingNamespace.ToDisplayString();
+                var typeName = type.Name;
                 var sourceText = $@"#nullable enable
 using System;
 using System.Diagnostics;
@@ -37,7 +37,7 @@ namespace {fullNamespace}
     public readonly partial struct {typeName} : IEquatable<{typeName}>, IComparable<{typeName}>
     {{
         private readonly long _value;
-        private {typeName}(long value) => _value = value;
+        public {typeName}(long value) => _value = value;
         public int CompareTo({typeName} other) => _value.CompareTo(other._value);
         public bool Equals({typeName} other) => _value == other._value;
         public override bool Equals(object? obj) => obj is {typeName} id && Equals(id);
